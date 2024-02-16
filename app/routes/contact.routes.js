@@ -1,19 +1,3 @@
-/**
- * Handles all incoming request for /api/contacts endpoint
- * DB table for this public.contact
- * Model used here is contact.model.js
- * SUPPORTED API ENDPOINTS
- *              GET     /api/contacts
- *              GET     /api/contacts/:id
- *              POST    /api/contacts
- *              PUT     /api/contacts/:id
- *              DELETE  /api/contacts/:id
- * 
- * @author      Aslam Bari
- * @date        Feb, 2023
- * @copyright   www.ibirdsservices.com  
- */
-
 const e = require("express");
 const { fetchUser } = require("../middleware/fetchuser.js");
 const Contact = require("../models/contact.model.js");
@@ -107,25 +91,16 @@ module.exports = app => {
     const permission = req.userinfo.permissions.find(el => el.name === permissions.EDIT_LEAD || el.name === permissions.MODIFY_ALL);
     if (!permission) return res.status(401).json({errors : "Unauthorized"});
 
-    const {salutation, firstname, lastname, title, email, phone, street, city, state, pincode, country, company, type,contactcreateddate} = req.body;
+    const { firstname, lastname, email, phone,createddate,lastmodifieddate} = req.body;
     const errors = [];
     const contactRec = {};
 
-    console.log("fnm", req.body.hasOwnProperty("salutation"));
-    if(req.body.hasOwnProperty("salutation")){contactRec.salutation = salutation};
     if(req.body.hasOwnProperty("firstname")){contactRec.firstname = firstname; if(!firstname){errors.push('Firstname is required')}};
     if(req.body.hasOwnProperty("lastname")){contactRec.lastname = lastname; if(!lastname){errors.push('Lastname is required')}};
-    if(req.body.hasOwnProperty("title")){contactRec.title = title};
     if(req.body.hasOwnProperty("email")){contactRec.email = email};
     if(req.body.hasOwnProperty("phone")){contactRec.phone = phone;if(!phone){phone; errors.push('Phone is required')}};
-    if(req.body.hasOwnProperty("street")){contactRec.street = street};
-    if(req.body.hasOwnProperty("city")){contactRec.city = city};
-    if(req.body.hasOwnProperty("state")){contactRec.state = state};
-    if(req.body.hasOwnProperty("pincode")){contactRec.pincode = pincode};
-    if(req.body.hasOwnProperty("country")){contactRec.country = country};
-    if(req.body.hasOwnProperty("company")){contactRec.company = company};
-    if(req.body.hasOwnProperty("type")){contactRec.type = type};
-    if(req.body.hasOwnProperty("contactcreateddate")){contactRec.contactcreateddate = contactcreateddate};
+    if(req.body.hasOwnProperty("createddate")){contactRec.createddate = createddate};
+    if(req.body.hasOwnProperty("lastmodifieddate")){contactRec.lastmodifieddate = lastmodifieddate};
 
     console.log('==================================');
     if(errors.length !== 0){

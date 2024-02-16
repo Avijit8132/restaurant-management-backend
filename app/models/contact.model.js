@@ -9,12 +9,13 @@ function init(schema_name) {
 async function create(newContact, userid) {
   console.log('-----create model--------');
   delete newContact.id;
+  console.log("this.schema",this.schema);
 
   const result = await sql.query(
     `INSERT INTO ${this.schema}.contact 
-     (salutation, title, firstname, lastname, email, phone, street, city, state, pincode, country, Company, type, createdbyid, lastmodifiedbyid, contactcreateddate)  
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16) RETURNING *`,
-    [newContact.salutation, newContact.title, newContact.firstname, newContact.lastname, newContact.email, newContact.phone, newContact.street, newContact.city, newContact.state, newContact.pincode, newContact.country, newContact.company, newContact.type, userid, userid,newContact.contactcreateddate]
+     (firstname, lastname, email, phone,createdbyid, lastmodifiedbyid, createddate,lastmodifieddate)  
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+    [newContact.firstname, newContact.lastname, newContact.email, newContact.phone, userid, userid,newContact.createddate,newContact.lastmodifieddate]
   );
 
   if (result.rows.length > 0) {
