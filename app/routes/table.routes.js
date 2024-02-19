@@ -10,9 +10,9 @@ module.exports = app => {
 
   // Create a new Table
   router.post("/", fetchUser, [
+    body('name', 'Please enter name').isLength({ min: 1 }),
     body('occupancy', 'Please enter occupancy').isLength({ min: 1 }),
     body('status', 'Please enter status').isLength({ min: 1 }),
-    body('description', 'Please enter description').isLength({ min: 1 })
     // Add validation rules for other fields as needed
   ] ,
   async (req, res)=>{
@@ -75,7 +75,7 @@ module.exports = app => {
       const { occupancy, status, description } = req.body;
       const errors = [];
       const tableRec = {};
-
+      if (req.body.hasOwnProperty("name")) { tableRec.occupancy = occupancy; }
       if (req.body.hasOwnProperty("occupancy")) { tableRec.occupancy = occupancy; }
       if (req.body.hasOwnProperty("status")) { tableRec.status = status; }
       if (req.body.hasOwnProperty("description")) { tableRec.description = description; }

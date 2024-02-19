@@ -13,9 +13,9 @@ async function create(newTable, userid) {
 
   const result = await sql.query(
     `INSERT INTO ${this.schema}.table
-     (occupancy, status, description, lastmodifiedbyid, createdbyid)  
-     VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-    [newTable.occupancy, newTable.status, newTable.description, userid, userid]
+     (name,occupancy, status, description, lastmodifiedbyid, createdbyid)  
+     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+    [newTable.name,newTable.occupancy, newTable.status, newTable.description, userid, userid]
   );
 
   if (result.rows.length > 0) {
