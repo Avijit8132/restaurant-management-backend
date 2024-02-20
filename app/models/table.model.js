@@ -44,15 +44,15 @@ async function findAll() {
 };
 
 async function updateById(id, newTable, userid) {
-  // Implementation of the updateById function
   console.log('===Model Table Update====');
   delete newTable.id;
   newTable['lastmodifiedbyid'] = userid;
 
   const query = buildUpdateQuery(id, newTable, this.schema);
-
-  // Turn newTable into an array of values
+  
+  // Turn newContact into an array of values
   var colValues = Object.values(newTable);
+  colValues.push(id); // Add id parameter for WHERE clause
 
   console.log('query:', query);
   const result = await sql.query(query, colValues);
@@ -62,7 +62,7 @@ async function updateById(id, newTable, userid) {
   return null;
 }
 
-async function deleteTask(id) {
+async function deleteTable(id) {
   const result = await sql.query(`DELETE FROM ${this.schema}.table WHERE id = $1`, [id]);
 
   if (result.rowCount > 0)
@@ -72,14 +72,13 @@ async function deleteTask(id) {
 
 function buildUpdateQuery(id, cols, schema) {
   // Setup static beginning of query
-  var query = [`UPDATE ${schema}.table`];
-  query.push('SET');
+  var query = [`UPDATE ${schema}.table SET`];
 
   // Create another array storing each set command
   // and assigning a number value for parameterized query
   var set = [];
   Object.keys(cols).forEach(function (key, i) {
-    set.push(key + ' = ($' + (i + 1) + ')');
+    set.push(`${key} = ($${i + 1})`); 
   });
   query.push(set.join(', '));
 
@@ -90,4 +89,5 @@ function buildUpdateQuery(id, cols, schema) {
   return query.join(' ');
 }
 
-module.exports = { init, findById, updateById, findAll, create, deleteTask };
+
+module.exports = { init, findById, updateById, findAll, create, deleteTable };
