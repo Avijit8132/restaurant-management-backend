@@ -33,7 +33,19 @@ async function create(newBooking, userid) {
 }
 
 async function findById(id) {
-  const query = `SELECT * FROM ${this.schema}.booking WHERE id = $1`;
+  const query = `
+    SELECT 
+      b.*, 
+      t.name AS table_name,
+      CONCAT(contact.firstname, ' ', contact.lastname, ' - ', contact.phone) AS contact_name
+    FROM 
+      ${this.schema}.booking b
+    INNER JOIN 
+      ${this.schema}.contact contact ON contact.id = b.contactid 
+    INNER JOIN 
+      ${this.schema}.table t ON t.id = b.tableid
+    WHERE 
+      b.id = $1`;
   const result = await sql.query(query, [id]);
 
   if (result.rows.length > 0) {
@@ -43,8 +55,18 @@ async function findById(id) {
   return null;
 }
 
+
 async function findAll() {
-  const query = `SELECT * FROM ${this.schema}.booking ORDER BY createddate DESC`;
+  const query =  ` SELECT 
+  ${this.schema}.booking.*, 
+  CONCAT(contact.firstname, ' ', contact.lastname, ' - ', contact.phone) AS contact_name,
+  tbl.name AS table_name
+FROM 
+${this.schema}.booking 
+INNER JOIN 
+${this.schema}.contact contact ON contact.id = ${this.schema}.booking.contactid 
+INNER JOIN 
+${this.schema}.table tbl ON tbl.id = ${this.schema}.booking.tableid;`
   const result = await sql.query(query);
   return result.rows;
 }
