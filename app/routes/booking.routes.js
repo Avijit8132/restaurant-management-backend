@@ -12,7 +12,6 @@ module.exports = app => {
   router.post("/", fetchUser, [
     body("tableid", "Please provide a table ID").notEmpty(),
     body("contactid", "Please provide a contact ID").notEmpty(),
-    body("status", "Please provide a status").notEmpty(),
     body("numberofperson", "Please provide the number of persons").notEmpty().isNumeric(),
   ], async (req, res) => {
     // Check permissions
@@ -26,7 +25,7 @@ module.exports = app => {
 
     Booking.init(req.userinfo.tenantcode);
     const booking = await Booking.create(req.body, req.userinfo.id);
-
+    console.log("req.body---",req.body);
     if (!booking) {
       return res.status(400).json({ errors: "Bad Request" });
     }
