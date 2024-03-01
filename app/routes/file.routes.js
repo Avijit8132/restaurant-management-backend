@@ -1,25 +1,9 @@
-/**
- * Handles all incoming request for /api/files endpoint
- * DB table for this public.file
- * Model used here is file.model.js
- * SUPPORTED API ENDPOINTS
- *              GET     /api/files/:pid/*
- *              GET     /api/files/:id
- *              POST    /api/files/:pid
- *              PUT     /api/files/:id
- *              DELETE  /api/files/:id
- *
- * @author      Aslam Bari
- * @date        Feb, 2023
- * @copyright   www.ibirdsservices.com
- */
-
 const e = require("express");
 const { fetchUser } = require("../middleware/fetchuser.js");
 const File = require("../models/file.model.js");
 const path = require("path");
 const fs = require("fs");
-const Property = require("../models/property.model.js");
+// const Property = require("../models/property.model.js");
 
 // const moment = require("moment");
 

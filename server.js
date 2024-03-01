@@ -8,7 +8,7 @@ const path = require('path');
 const fileUpload = require("express-fileupload");
 const { socketAuth } = require("./app/middleware/fetchuser.js");
 const cron = require('node-cron');
-const leaseNotification = require('./app/scripts/leaseNotification.js')
+
 
 const app = express();
 
