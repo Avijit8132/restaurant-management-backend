@@ -8,11 +8,6 @@ function init(schema_name) {
 
 async function getTotalProperties() {
     let query = `SELECT  count(${this.schema}.property.id) totalproperties FROM ${this.schema}.property `;
-    // query += ` INNER JOIN public.user cu ON cu.Id = ${this.schema}.property.createdbyid `;
-    // query += ` INNER JOIN public.user mu ON mu.Id = ${this.schema}.property.lastmodifiedbyid `;
-    // query += ` INNER JOIN public.user owner ON owner.Id = ${this.schema}.property.ownerid `;
-    // query += ` INNER JOIN ${this.schema}.contact contact ON contact.Id = ${this.schema}.property.contactid `;
-    // query += `INNER JOIN ${this.schema}.project proj ON proj.Id = ${this.schema}.property.projectid`;
   console.log("query ", query);
   const result = await sql.query(query);
   if (result.rows.length > 0) return result.rows;

@@ -38,10 +38,11 @@ async function findById(id) {
 };
 
 async function findAll() {
-  const result = await sql.query(`SELECT * FROM ${this.schema}.table`);
+  const result = await sql.query(`SELECT * FROM ${this.schema}.table ORDER BY createddate ASC`);
   console.log('rows:===>', result.rows);
   return result.rows;
 };
+
 
 async function updateById(id, newTable, userid) {
   console.log('===Model Table Update====');

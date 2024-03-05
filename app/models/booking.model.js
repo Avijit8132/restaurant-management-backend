@@ -32,29 +32,6 @@ async function create(newBooking, userid) {
   return null;
 }
 
-// async function findById(id) {
-//   const query = `
-//     SELECT 
-//       b.*, 
-//       t.name AS table_name,
-//       CONCAT(contact.firstname, ' ', contact.lastname, ' - ', contact.phone) AS contact_name
-//     FROM 
-//       ${this.schema}.booking b
-//     INNER JOIN 
-//       ${this.schema}.contact contact ON contact.id = b.contactid 
-//     INNER JOIN 
-//       ${this.schema}.table t ON t.id = b.tableid
-//     WHERE 
-//       b.id = $1`;
-//   const result = await sql.query(query, [id]);
-
-//   if (result.rows.length > 0) {
-//     return result.rows[0];
-//   }
-
-//   return null;
-// }
-
 
 async function findById(id) {
   const query = `

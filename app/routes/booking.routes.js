@@ -65,22 +65,6 @@ module.exports = app => {
     }
   });
 
-  // Update Booking
-  // router.put("/:id", fetchUser, async (req, res) => {
-  //   // Check permissions
-  //   const permission = req.userinfo.permissions.find(el => el.name === permissions.EDIT_BOOKING || el.name === permissions.MODIFY_ALL);
-  //   if (!permission) return res.status(401).json({ errors: "Unauthorized" });
-
-  //   const bookingData = req.body;
-  //   Booking.init(req.userinfo.tenantcode);
-  //   const updatedBooking = await Booking.updateById(req.params.id, bookingData, req.userinfo.id);
-
-  //   if (updatedBooking) {
-  //     return res.status(200).json({ success: true, message: "Booking updated successfully" });
-  //   } else {
-  //     return res.status(404).json({ errors: "Booking not found" });
-  //   }
-  // });
   router.put("/:id", fetchUser, async (req, res) => {
     // Check permissions
     const permission = req.userinfo.permissions.find(el => el.name === permissions.EDIT_BOOKING || el.name === permissions.MODIFY_ALL);
